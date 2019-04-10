@@ -1,7 +1,9 @@
 import React,{Component} from 'react'
 import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux'
+import store from './store'
 import {HashRouter as Router,Route,Switch} from 'react-router-dom'
-import {My,Homes,Find,Cart,Detail} from './components';
+import {My,Homes,Find,Cart,NewsDetail,ProductDetail} from './components';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
@@ -41,12 +43,14 @@ const styles = {
       return (
           <div>
           <Switch>
-            <Route path='/home'  component={Homes} />
-            <Route path='/find'  component={Find}/>
-            <Route path='/cart' component={Cart}/>
-            <Route path='/my'  component={My}/>
-            <Route path='/news/:id' component={Detail}/>
-            <Route path='/product/:id' component={Detail}/>
+            <div style={{marginBottom:"56px"}}>
+              <Route path='/home'  component={Homes} />
+              <Route path='/find'  component={Find}/>
+              <Route path='/cart' component={Cart}/>
+              <Route path='/my'  component={My}/>
+              <Route path='/news/:id' component={NewsDetail}/>
+              <Route path='/product/:id' component={ProductDetail}/>
+            </div>
           </Switch>
         <BottomNavigation value={value} onChange={this.handleChange}  className={classes.root}>
           <BottomNavigationAction label="首页" value="home" icon={<Home />} />
@@ -70,14 +74,15 @@ const styles = {
 class Index extends Component{
    render(){
        return (
+        <Provider store={store}>
            <Router>
               <div>
                  <Switch>
                    <Route path='/' component={ConnectSL}></Route>
-
                  </Switch>
               </div>
            </Router>
+          </Provider>
        )
    }
 }

@@ -7,6 +7,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
 import axios from 'axios'
 
 const styles = theme => ({
@@ -30,6 +32,9 @@ function ListDividers(props) {
             return  (
                 <NavLink to={`/news/${index}`} key={index} style={{color:'blue'}}>
                 <ListItem alignItems="flex-start" button>
+                <ListItemAvatar>
+                  <Avatar alt="Remy Sharp" src={item.img} />
+                </ListItemAvatar>
                 <ListItemText
                   primary={item.title}
                   secondary={
