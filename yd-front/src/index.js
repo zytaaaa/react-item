@@ -42,16 +42,18 @@ const styles = {
 
       return (
           <div>
-          <Switch>
+
             <div style={{marginBottom:"56px"}}>
-              <Route path='/home'  component={Homes} />
+            <Switch>
               <Route path='/find'  component={Find}/>
               <Route path='/cart' component={Cart}/>
               <Route path='/my'  component={My}/>
               <Route path='/news/:id' component={NewsDetail}/>
               <Route path='/product/:id' component={ProductDetail}/>
+              <Route  component={Homes}/>
+              </Switch>
             </div>
-          </Switch>
+
         <BottomNavigation value={value} onChange={this.handleChange}  className={classes.root}>
           <BottomNavigationAction label="首页" value="home" icon={<Home />} />
           <BottomNavigationAction label="发现" value="find" icon={<Explore />} />

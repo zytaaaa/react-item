@@ -39,7 +39,6 @@ const styles  = theme => ({
   root: {
     flexGrow: 1,
     width: '100%',
-    maxWidth: 360,
     backgroundColor: '#3f51b5',
   },
   grow: {
@@ -96,7 +95,7 @@ class ButtonAppBar extends React.Component{
                                 <Avatar>
                                     <img src={user.img} style={{width:'100%',height:'100%'}}/>
                                 </Avatar>
-                               <ListItemText  primary={user.name} secondary={user.tel.regexp}/>
+                               <ListItemText  primary={user.name} secondary={user.tel}/>
                                 <Button>
                                    <KeyboardArrowRight/>
                                 </Button>
@@ -126,7 +125,7 @@ class ButtonAppBar extends React.Component{
                             label="姓名"
                             className={classes.textField}
                             margin="normal"
-                            defaultValue="王娜"
+                            placeholder='提示admin'
                       />
                       <TextField
                         id="standard-uncontrolled"
@@ -134,7 +133,7 @@ class ButtonAppBar extends React.Component{
                         className={classes.textField}
                         margin="normal"
                         onBlur={this.hanleChangeTel}
-                        defaultValue="144****2767"
+                        placeholder='提示1111111111'
                         />
                     </DialogContent>
                     <DialogActions>

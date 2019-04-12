@@ -35,15 +35,13 @@ module.exports=function(){
                 }),
             }
         }),
-        user:_.times(10,function(n){
-            return {
-                id:n,
-                img:Mock.Random.image('180x150', Mock.Random.hex()),
-                name:Mock.Random.cname(),
-                tel:Mock.mock({
-                    'regexp': /[1]\d{2}\*{4}\d{4}/
-                  })
+        user:[
+            {
+                id:1,
+                img:"http://dummyimage.com/180x150/f279c1",
+                name:'admin',
+                tel:'11111111111'
             }
-        }),
+        ]
     }
 }
