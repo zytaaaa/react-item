@@ -37,46 +37,29 @@ const styles = theme => ({
 
 class SimpleTabs extends React.Component {
   state = {
-     value:''
+     value:0
   };
 
   handleChange = (event, value) => {
     this.setState({ value });
   };
-
-  componentWillReceiveProps(){
-    this.setState({
-      value: location.hash.split('/')[2]
-    });
-  }
-  componentDidMount(){
-    this.setState({
-      value: location.hash.split('/')[2]
-    });
-  }
   render() {
     const { classes } = this.props;
     const { value } = this.state;
     return (
       <div className={classes.root}>
-      <Switch>
-          <Route path='/find/news' component={News}/>
-          <Route path='/find/product' component={Product}/>
-          <Route component={News}/>
-      </Switch>
         <AppBar position="static" className={classes.topStyle}>
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="新闻" component={Link} to='/find/news' value='news'></Tab>
-            <Tab label="产品" component={Link} to='/find/product' value='product'></Tab>
+            <Tab label="新闻"></Tab>
+            <Tab label="产品"></Tab>
           </Tabs>
         </AppBar>
+        {value === 0 &&  <TabContainer><News/></TabContainer>}
+        {value === 1 && <TabContainer><Product/></TabContainer>}
      </div>
     );
   }
 }
-
-// {value === 0 &&  <TabContainer><News/></TabContainer>}
-// {value === 1 && <TabContainer><Product/></TabContainer>}
 
 SimpleTabs.propTypes = {
   classes: PropTypes.object.isRequired,

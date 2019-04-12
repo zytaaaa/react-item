@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux'
 import store from './store'
 import {HashRouter as Router,Route,Switch} from 'react-router-dom'
-import {My,Homes,Find,Cart,NewsDetail,ProductDetail,News,Product} from './components';
+import {My,Homes,Find,Cart,NewsDetail,ProductDetail} from './components';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
@@ -67,7 +67,7 @@ const styles = {
         <BottomNavigation value={value} onChange={this.handleChange}  className={classes.root}>
           <BottomNavigationAction label="首页" value="home" icon={<Home />} />
           <BottomNavigationAction label="发现" value="find" icon={<Explore />} />
-          <BottomNavigationAction label="订单" value="cart" icon={<ShoppingCart />} />
+          <BottomNavigationAction label="购物车" value="cart" icon={<ShoppingCart />} />
           <BottomNavigationAction label="我的" value="my" icon={<Person/>} />
         </BottomNavigation>
         </div>
