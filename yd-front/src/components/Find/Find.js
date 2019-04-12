@@ -7,6 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import News from './News';
 import Product from './Product';
+import {Link,Switch,Route} from 'react-router-dom'
 
 
 
@@ -48,18 +49,24 @@ class SimpleTabs extends React.Component {
     const { value } = this.state;
     return (
       <div className={classes.root}>
+      <Switch>
+          <Route path='/find/news' component={News}/>
+          <Route path='/find/product' component={Product}/>
+          <Route component={News}/>
+      </Switch>
         <AppBar position="static" className={classes.topStyle}>
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="新闻"></Tab>
-            <Tab label="产品"></Tab>
+            <Tab label="新闻" component={Link} to='/find/news'></Tab>
+            <Tab label="产品" component={Link} to='/find/product'></Tab>
           </Tabs>
         </AppBar>
-        {value === 0 &&  <TabContainer><News/></TabContainer>}
-        {value === 1 && <TabContainer><Product/></TabContainer>}
       </div>
     );
   }
 }
+
+// {value === 0 &&  <TabContainer><News/></TabContainer>}
+// {value === 1 && <TabContainer><Product/></TabContainer>}
 
 SimpleTabs.propTypes = {
   classes: PropTypes.object.isRequired,

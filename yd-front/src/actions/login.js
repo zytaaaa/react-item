@@ -8,12 +8,22 @@ export const getUserData = (data)=>{
 
 export function fetchUser(tel){
     return dispatch=>{
-        var url = `http://localhost:3000/user?tel.regexp=${tel}`;
+        var url = `${GLOBALURL}user?tel=${tel}`;
         return axios({
             url   : url,
             method: 'get',
         }).then(res=>{
-            dispatch(getUserData(res.data));
+            if(res.data){
+              return dispatch(getUserData(res.data));
+            }else{
+                return dispatch(getUserData(null))
+            }
         })
+    }
+}
+
+export const getUserOut = ()=>{
+    return {
+        type   : 'DELETEUSER'
     }
 }

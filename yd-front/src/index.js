@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux'
 import store from './store'
 import {HashRouter as Router,Route,Switch} from 'react-router-dom'
-import {My,Homes,Find,Cart,NewsDetail,ProductDetail} from './components';
+import {My,Homes,Find,Cart,NewsDetail,ProductDetail,News,Product} from './components';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
@@ -13,6 +13,7 @@ import Home from '@material-ui/icons/Home';
 import Explore from '@material-ui/icons/Explore';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 
+window.GLOBALURL='http://111.230.144.150:3003/';
 const styles = {
     root: {
       position:'fixed',
@@ -27,7 +28,7 @@ const styles = {
 
   class LabelBottomNavigation extends Component {
     state = {
-      value: 'recents',
+      value: 'home',
     };
 
     handleChange = (event, value) => {
@@ -35,7 +36,16 @@ const styles = {
          this.props.history.push(`/${value}`)
        });
     };
-
+    componentDidMount(){
+        this.setState({
+          value:location.hash.split('/')[1]
+        })
+    }
+   componentWillReceiveProps(){
+      this.setState({
+        value:location.hash.split('/')[1]
+      })
+   }
     render() {
       const { classes } = this.props;
       const { value } = this.state;
@@ -88,5 +98,4 @@ class Index extends Component{
        )
    }
 }
-
 ReactDOM.render(<Index/>,document.getElementById('app'));

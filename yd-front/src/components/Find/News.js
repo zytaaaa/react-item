@@ -16,7 +16,7 @@ const styles = theme => ({
     width: '100%',
     maxWidth: '360px',
     backgroundColor: theme.palette.background.paper,
-    marginTop: '20px',
+    marginTop: '56px',
   },
   inline: {
     fontSize:'0.75rem'
@@ -68,7 +68,7 @@ class ListDate extends Component{
    componentDidMount(){
         axios({
             method:'get',
-            url:'http://localhost:3000/news',
+            url:`${GLOBALURL}news`,
         }).then(res=>{
         this.setState({
             stateList:res.data

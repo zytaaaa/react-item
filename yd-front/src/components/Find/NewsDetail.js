@@ -71,7 +71,7 @@ class Media extends Component{
     componentDidMount(){
       axios({
             method:'get',
-            url:`http://localhost:3000/news/${this.props.match.params.id}`,
+            url:`${GLOBALURL}news/${this.props.match.params.id}`,
         }).then(res=>{
           this.setState({
             newData:res.data

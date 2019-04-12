@@ -2,9 +2,7 @@ import React,{Component} from 'react';
 import "../../../node_modules/react-image-gallery/styles/css/image-gallery.css";
 import ImageGallery from 'react-image-gallery';
 class MyComponent extends React.Component {
-
-  render() {
-
+    render() {
     const images = [
       {
         original: 'http://lorempixel.com/1000/600/nature/1/',

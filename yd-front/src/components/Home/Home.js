@@ -57,7 +57,7 @@ class PrimarySearchAppBar extends React.Component {
   newDate(){
     axios({
       method:'get',
-      url:`http://localhost:3000/news?_page=1&_limit=5`
+      url:`${GLOBALURL}news?_page=1&_limit=5`
     }).then((res)=>{
         this.setState({
           newlist:res.data
@@ -67,7 +67,7 @@ class PrimarySearchAppBar extends React.Component {
   productDate(){
     axios({
       method:'get',
-      url:`http://localhost:3000/product?_page=1&_limit=5`
+      url:`${GLOBALURL}product?_page=1&_limit=5`
     }).then((res)=>{
         this.setState({
           prolist:res.data

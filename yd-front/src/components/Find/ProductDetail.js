@@ -91,7 +91,7 @@ class RecipeReviewCard extends React.Component {
   componentDidMount(){
     axios({
           method:'get',
-          url:`http://localhost:3000/product/${this.props.match.params.id}`,
+          url:`${GLOBALURL}product/${this.props.match.params.id}`,
       }).then(res=>{
         this.setState({
             productDate:res.data

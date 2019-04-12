@@ -18,7 +18,7 @@ import WorkOutline from '@material-ui/icons/WorkOutline'
 import TrendingUp from '@material-ui/icons/TrendingUp'
 import Comment from '@material-ui/icons/Comment'
 import { connect } from 'react-redux';
-import {fetchUser} from '../actions/login'
+import {fetchUser,getUserOut} from '../actions/login'
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -32,7 +32,7 @@ const mapStateToProps = (state)=>{
     }
   }
 const MapdispatchProps={
-    fetchUser
+    fetchUser,getUserOut
 }
 
 const styles  = theme => ({
@@ -73,8 +73,18 @@ class ButtonAppBar extends React.Component{
         this.setState({ open: false });
       };
       handleClickLogin=(tel)=>{
-         this.props.fetchUser(tel);
-         this.handleClose();
+        this.props.fetchUser(tel);
+          this.handleClose();
+      };
+      handleClickLogout=()=>{
+        if(this.props.user.tel){
+            if(confirm('确认退出吗？')){
+              this.props.getUserOut();
+            }
+        }else{
+            alert("请登录！");
+        }
+
       }
     render(){
         const { classes,user} =this.props;
@@ -86,7 +96,7 @@ class ButtonAppBar extends React.Component{
                     <Typography variant="h6" color="inherit" className={classes.grow}>
                         我的
                     </Typography>
-                    <Button color="inherit">设置</Button>
+                    <Button color="inherit" onClick={this.handleClickLogout}>退出</Button>
                     </Toolbar>
                 </AppBar>
                     <List className={classes.root}>

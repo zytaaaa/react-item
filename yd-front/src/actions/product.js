@@ -8,7 +8,7 @@ export const getListData = (data)=>{
 
 export function fetchList(){
     return dispatch=>{
-        var url = `http://localhost:3000/product`;
+        var url = `${GLOBALURL}product`;
         return axios({
             url   : url,
             method: 'get'

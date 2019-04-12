@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 module.exports = {
     // 入口
     // 出口
@@ -41,6 +41,7 @@ module.exports = {
         new MiniCssExtractPlugin({
             filename     : "[name].css",
             chunkFilename: "[id].css"
-          })
+          }),
+        new OptimizeCssAssetsPlugin(),
       ]
 }
