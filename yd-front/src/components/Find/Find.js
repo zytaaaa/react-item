@@ -37,13 +37,23 @@ const styles = theme => ({
 
 class SimpleTabs extends React.Component {
   state = {
-     value:0
+     value:''
   };
 
   handleChange = (event, value) => {
     this.setState({ value });
   };
 
+  componentWillReceiveProps(){
+    this.setState({
+      value: location.hash.split('/')[2]
+    });
+  }
+  componentDidMount(){
+    this.setState({
+      value: location.hash.split('/')[2]
+    });
+  }
   render() {
     const { classes } = this.props;
     const { value } = this.state;
@@ -56,11 +66,11 @@ class SimpleTabs extends React.Component {
       </Switch>
         <AppBar position="static" className={classes.topStyle}>
           <Tabs value={value} onChange={this.handleChange}>
-            <Tab label="新闻" component={Link} to='/find/news'></Tab>
-            <Tab label="产品" component={Link} to='/find/product'></Tab>
+            <Tab label="新闻" component={Link} to='/find/news' value='news'></Tab>
+            <Tab label="产品" component={Link} to='/find/product' value='product'></Tab>
           </Tabs>
         </AppBar>
-      </div>
+     </div>
     );
   }
 }
