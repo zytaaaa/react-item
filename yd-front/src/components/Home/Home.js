@@ -1,22 +1,15 @@
 import React from 'react';
+import axios from 'axios';
 import Banner from './Banner'
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 
 const styles = theme => ({
   root: {
@@ -29,184 +22,127 @@ const styles = theme => ({
     marginLeft: -12,
     marginRight: 20,
   },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing.unit * 2,
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing.unit * 3,
-      width: 'auto',
-    },
+  navStyle:{
+    marginTop:"5px",
+    minHeight:'40px',
+    width:'70%',
+    borderRadius: '6px',
   },
-  searchIcon: {
-    width: theme.spacing.unit * 9,
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
+  card: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginTop:'5px'
   },
-  inputRoot: {
-    color: 'inherit',
-    width: '100%',
-  },
-  inputInput: {
-    paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: 200,
-    },
-  },
-  sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
-  },
-  sectionMobile: {
+  details: {
     display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
-    },
+    flexDirection: 'column',
   },
+  content: {
+    flex: '1 0 auto',
+  },
+  cover: {
+    width: 151,
+    minWidth: '7rem'
+  }
 });
 
 class PrimarySearchAppBar extends React.Component {
-  state = {
-    anchorEl: null,
-    mobileMoreAnchorEl: null,
-  };
-
-  handleProfileMenuOpen = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleMenuClose = () => {
-    this.setState({ anchorEl: null });
-    this.handleMobileMenuClose();
-  };
-
-  handleMobileMenuOpen = event => {
-    this.setState({ mobileMoreAnchorEl: event.currentTarget });
-  };
-
-  handleMobileMenuClose = () => {
-    this.setState({ mobileMoreAnchorEl: null });
-  };
-
+  state={
+    newlist:[],
+    prolist:[],
+  }
+  componentDidMount(){
+     this.newDate();
+     this.productDate();
+  }
+  newDate(){
+    axios({
+      method:'get',
+      url:`http://localhost:3000/news?_page=1&_limit=5`
+    }).then((res)=>{
+        this.setState({
+          newlist:res.data
+        })
+    })
+  }
+  productDate(){
+    axios({
+      method:'get',
+      url:`http://localhost:3000/product?_page=1&_limit=5`
+    }).then((res)=>{
+        this.setState({
+          prolist:res.data
+        })
+    })
+  }
   render() {
-    const { anchorEl, mobileMoreAnchorEl } = this.state;
     const { classes } = this.props;
-    const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-    const renderMenu = (
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
-      </Menu>
-    );
-
-    const renderMobileMenu = (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMobileMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <MailIcon />
-            </Badge>
-          </IconButton>
-          <p>Messages</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleMobileMenuClose}>
-          <IconButton color="inherit">
-            <Badge badgeContent={11} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notifications</p>
-        </MenuItem>
-        <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
-        </MenuItem>
-      </Menu>
-    );
-
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="fixed">
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-              <MenuIcon />
+              首页
             </IconButton>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-              />
-            </div>
-            <div className={classes.grow} />
-            <div className={classes.sectionDesktop}>
-              <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton color="inherit">
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                aria-haspopup="true"
-                onClick={this.handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-            </div>
-            <div className={classes.sectionMobile}>
-              <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-                <MoreIcon />
-              </IconButton>
-            </div>
           </Toolbar>
         </AppBar>
-        {renderMenu}
-        {renderMobileMenu}
         <Banner/>
+        <AppBar position="static" color="secondary" className={classes.navStyle}>
+          <Toolbar style={{minHeight:'2rem'}}>
+            <Typography variant="h6" color="inherit">
+               - - - - 产品 - - - -
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        {this.state.prolist.length>0 ?
+          <div>
+           {this.state.prolist.map((value)=>{
+          return (<Card className={classes.card} key={value.id}>
+          <CardMedia
+              className={classes.cover}
+              image={value.img[0]}
+              title={value.title}
+            />
+          <div className={classes.details}>
+            <CardContent className={classes.content}>
+              <Typography component="h6" variant="h6">
+              {value.title}
+              </Typography>
+              <Typography variant="subtitle1" color="textSecondary">
+                {value.address}
+              </Typography>
+            </CardContent>
+          </div>
+        </Card>)
+        })}</div>:false}
+        <AppBar position="static" color="secondary" className={classes.navStyle}>
+        <Toolbar style={{minHeight:'2rem'}}>
+        <Typography variant="h6" color="inherit">
+           - - - - 新闻 - - - -
+        </Typography>
+      </Toolbar>
+    </AppBar>
+    {this.state.newlist.length>0 ?
+      <div>
+       {this.state.newlist.map((value)=>{
+      return (<Card className={classes.card} key={value.id}>
+      <CardMedia
+          className={classes.cover}
+          image={value.img}
+          title={value.title}
+        />
+      <div className={classes.details}>
+        <CardContent className={classes.content}>
+          <Typography component="h6" variant="h6">
+          {value.title}
+          </Typography>
+          <Typography component="span" color="textSecondary">
+            {value.author}
+          </Typography>
+        </CardContent>
+      </div>
+    </Card>)
+    })}</div>:false}
+
       </div>
     );
   }
@@ -216,4 +152,4 @@ PrimarySearchAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PrimarySearchAppBar);
+export default withStyles(styles,{ withTheme: true })(PrimarySearchAppBar);

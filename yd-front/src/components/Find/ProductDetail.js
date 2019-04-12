@@ -23,7 +23,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import CloseIcon from '@material-ui/icons/Close';
 function mapStatetoProps(state){
   return {
-      cart:state.cart
+      cart:state.cart,
+      user:state.user
   }
 }
 
@@ -70,9 +71,10 @@ class RecipeReviewCard extends React.Component {
 
   state = { expanded: false ,productDate:{}, open: false,};
   handleClick = (props) => {
-    console.log(props);
     this.setState({ open: true });
-    props.addtocart(this.state.productDate);
+    if(props.user.img){
+        this.props.addtocart(this.state.productDate);
+    }
   };
 
   handleClose = (event, reason) => {
@@ -142,12 +144,14 @@ class RecipeReviewCard extends React.Component {
         horizontal: 'center',
       }}
       open={this.state.open}
-      autoHideDuration={2000}
+      autoHideDuration={1000}
       onClose={this.handleClose}
       ContentProps={{
         'aria-describedby': 'message-id',
       }}
-      message={<span id="message-id" style={{color:'green',fontWeight:700}}>已成功加入购物车!</span>}
+      message={<span id="message-id" style={{color:'green',fontWeight:700}}>
+             {this.props.user.img?'成功加入购物车!':'不好意思，请先登录!'}
+      </span>}
       action={[
         <Button key="undo" color="secondary" size="small" onClick={this.handleClose}>
           关闭

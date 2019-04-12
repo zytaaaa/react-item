@@ -5,11 +5,7 @@ module.exports=function(){
     return {
         showinfo:_.times(10,function(n){
             return {
-                id:n,
-                img:Mock.Random.image('180x150', Mock.Random.hex()),
-                title:Mock.Random.ctitle(),
-                author:Mock.Random.cname(),
-                text:Mock.Random.cparagraph()
+                original:Mock.Random.image('180x150', Mock.Random.hex()),
             }
         }),
         news:_.times(100,function(n){
@@ -37,6 +33,16 @@ module.exports=function(){
                 newprice:Mock.mock({
                     "number2|50-199": 100
                 }),
+            }
+        }),
+        user:_.times(10,function(n){
+            return {
+                id:n,
+                img:Mock.Random.image('180x150', Mock.Random.hex()),
+                name:Mock.Random.cname(),
+                tel:Mock.mock({
+                    'regexp': /[1]\d{2}\*{4}\d{4}/
+                  })
             }
         }),
     }

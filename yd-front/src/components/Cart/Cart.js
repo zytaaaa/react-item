@@ -12,6 +12,13 @@ import CartContent from './CartContent'
 const styles = {
     root: {
       flexGrow: 1,
+      paddingTop:'56px'
+    },
+    header:{
+      position:'fixed',
+      top:'0px',
+      left:'0px',
+      width:'100%',
     },
     grow: {
       flexGrow: 1,
@@ -20,13 +27,14 @@ const styles = {
       marginLeft: -12,
       marginRight: 20,
     },
+
   };
 
   function ButtonAppBar(props) {
     const { classes } = props;
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position="static" className={classes.header}>
           <Toolbar>
             <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
               <MenuIcon />
@@ -38,6 +46,7 @@ const styles = {
           </Toolbar>
         </AppBar>
         <CartContent/>
+
       </div>
     );
   }

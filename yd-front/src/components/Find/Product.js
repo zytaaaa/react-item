@@ -1,12 +1,22 @@
 import React,{Component} from 'react';
-import axios from 'axios';
+
 import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
+import { connect } from 'react-redux';
+import {fetchList} from '../../actions/product'
 
+const mapStateToProps = (state)=>{
+  return {
+      lists : state.product
+  }
+}
+const MapdispatchProps={
+   fetchList
+}
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -26,12 +36,12 @@ const styles = theme => ({
 });
 
 function TitlebarGridList(props) {
-  const { classes } = props;
+  const { classes,lists} = props;
   return (
     <div className={classes.root}>
       <GridList cellHeight={180} className={classes.gridList}>
-        {props.productList.map(tile => (
-            <GridListTile component={Link}  to={`/product/${tile.id}`}  key={tile.id}>
+        {lists.map((tile,index) => (
+            <GridListTile component={Link}  to={`/product/${tile.id}`}  key={index}>
                 <img src={tile.img[0]} alt={tile.title}/>
                   <GridListTileBar
                     title={<p style={{margin:'0 0 5px',fontSize:"14px"}}>{tile.title}</p>}
@@ -50,28 +60,15 @@ TitlebarGridList.propTypes = {
 };
 
 class Titlebar extends Component{
-  constructor(props) {
-      super(props);
-      this.state={
-          productList:[]
-      }
-  }
  componentDidMount(){
-      axios({
-          method:'get',
-          url:'http://localhost:3000/product',
-      }).then(res=>{
-      this.setState({
-         productList:res.data
-      })
-  });
+    this.props.fetchList();
  }
  render(){
      return (
-         <TitlebarGridList {...this.props} {...this.state}/>
+         <TitlebarGridList {...this.props}/>
      )
  }
 }
 
-
-export default withStyles(styles)(Titlebar);
+const productContainer=connect(mapStateToProps,MapdispatchProps)(Titlebar)
+export default withStyles(styles)(productContainer);
